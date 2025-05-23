@@ -1,0 +1,21 @@
+workflows:
+  ios-workflow:
+    name: iOS Build
+    max_build_duration: 20
+    environment:
+      xcode: latest
+    scripts:
+      - name: Build iOS App
+        script: |
+          cd Memorize
+          xcodebuild -project Memorize.xcodeproj \
+            -scheme Memorize \
+            -sdk iphoneos \
+            -configuration Release \
+            archive -archivePath $CM_BUILD_DIR/Memorize.xcarchive
+    artifacts:
+      - $CM_BUILD_DIR/Memorize.xcarchive
+    publishing:
+      email:
+        recipients:
+          - sofianadraga10@gmail.com
