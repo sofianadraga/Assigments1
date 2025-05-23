@@ -4,18 +4,25 @@ workflows:
     max_build_duration: 20
     environment:
       xcode: latest
-scripts:
-  - name: Build iOS App
-    script: |
-      xcodebuild -workspace Memorize.xcworkspace \
-        -scheme Memorize \
-        -sdk iphoneos \
-        -configuration Release \
-        -archivePath $CM_BUILD_DIR/Memorize.xcarchive \
-        -allowProvisioningUpdates \
-        archive
+    scripts:
+      - name: Build and export iOS app
+        script: |
+          xcodebuild -project Memorize/Memorize.xcodeproj \
+            -scheme Memorize \
+            -sdk iphoneos \
+            -configuration Release \
+            -archivePath $CM_BUILD_DIR/Memorize.xcarchive \
+            -allowProvisioningUpdates \
+            archive
+
+          xcodebuild -exportArchive \
+            -archivePath $CM_BUILD_DIR/Memorize.xcarchive \
+            -exportOptionsPlist Memorize/ExportOptions.plist \
+            -exportPath $CM_BUILD_DIR
+
     artifacts:
-      - $CM_BUILD_DIR/Memorize.xcarchive
+      - $CM_BUILD_DIR/*.ipa
+
     publishing:
       email:
         recipients:
