@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  Memorize
-//
-//  Codes from CS193P Instructor
-//
-
 import SwiftUI
 
 struct ContentView: View {
